@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import Card from './Card'
 import styles from './EmailPreviewCard.module.css'
+import { API_BASE } from '../apiBase'
 
 export default function EmailPreviewCard({ draft, onChange, onReset, showToast, connected }) {
   const [sending, setSending] = useState(false)
@@ -19,7 +20,7 @@ export default function EmailPreviewCard({ draft, onChange, onReset, showToast, 
     const payload = { to: draft.to, cc: draft.cc || '', subject: draft.subject, body: draft.body }
     console.log('[send]', payload)
     try {
-      const res = await fetch('/send-email', {
+      const res = await fetch(`${API_BASE}/send-email`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),

@@ -1,15 +1,16 @@
 import styles from './Header.module.css'
+import { API_BASE } from '../apiBase'
 
 export default function Header({ auth, onAuthChange, showToast }) {
   async function handleClick() {
     if (auth.connected) {
       if (!confirm('Disconnect your Gmail account?')) return
-      await fetch('/auth/disconnect', { method: 'POST' })
+      await fetch(`${API_BASE}/auth/disconnect`, { method: 'POST' })
       onAuthChange()
       showToast('Gmail disconnected', 'info')
     } else {
       try {
-        const res  = await fetch('/login')
+        const res  = await fetch(`${API_BASE}/login`)
         const data = await res.json()
         if (data.url) window.location.href = data.url
         else showToast(data.detail || 'Failed to get login URL', 'error')

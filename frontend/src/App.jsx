@@ -5,6 +5,7 @@ import RecordCard from './components/RecordCard'
 import TranscriptCard from './components/TranscriptCard'
 import EmailPreviewCard from './components/EmailPreviewCard'
 import Toast from './components/Toast'
+import { API_BASE } from './apiBase'
 
 console.log('[App] module loaded')
 
@@ -22,9 +23,9 @@ export default function App() {
   }
 
   async function fetchAuthStatus() {
-    console.log('[App] fetching /auth/status...')
+    console.log('[App] fetching /auth/status from', API_BASE)
     try {
-      const res  = await fetch('/auth/status')
+      const res  = await fetch(`${API_BASE}/auth/status`)
       console.log('[App] /auth/status response:', res.status)
       const data = await res.json()
       console.log('[App] auth data:', data)
@@ -104,7 +105,7 @@ export default function App() {
 
 async function connectEmail() {
   try {
-    const res  = await fetch('/login')
+    const res  = await fetch(`${API_BASE}/login`)
     const data = await res.json()
     if (data.url) window.location.href = data.url
   } catch {

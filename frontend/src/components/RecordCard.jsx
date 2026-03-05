@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react'
 import Card from './Card'
 import styles from './RecordCard.module.css'
+import { API_BASE } from '../apiBase'
 
 export default function RecordCard({ onTranscriptUpdate, showToast }) {
   const [state, setState]     = useState('idle')   // idle | recording | transcribing
@@ -51,7 +52,7 @@ export default function RecordCard({ onTranscriptUpdate, showToast }) {
     formData.append('audio', blob, 'recording.webm')
 
     try {
-      const res = await fetch('/transcribe', { method: 'POST', body: formData })
+      const res = await fetch(`${API_BASE}/transcribe`, { method: 'POST', body: formData })
       if (!res.ok) throw new Error((await res.json()).detail)
 
       const reader  = res.body.getReader()

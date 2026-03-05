@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import Card from './Card'
 import styles from './TranscriptCard.module.css'
+import { API_BASE } from '../apiBase'
 
 export default function TranscriptCard({ transcript, onTranscriptChange, onEmailReady, showToast }) {
   const [loading, setLoading] = useState(false)
@@ -9,7 +10,7 @@ export default function TranscriptCard({ transcript, onTranscriptChange, onEmail
     if (!transcript.trim()) { showToast('Transcript is empty.', 'error'); return }
     setLoading(true)
     try {
-      const res = await fetch('/generate-email', {
+      const res = await fetch(`${API_BASE}/generate-email`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ transcript }),
