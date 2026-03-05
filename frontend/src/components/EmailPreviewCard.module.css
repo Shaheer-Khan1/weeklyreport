@@ -63,6 +63,12 @@
   margin-top: 20px;
 }
 
+@media (max-width: 480px) {
+  .actions { flex-direction: column-reverse; }
+  .back { text-align: center; }
+  .chip { font-size: 11px; padding: 4px 9px; }
+}
+
 .back {
   background: var(--surface2);
   border: 1px solid var(--border);

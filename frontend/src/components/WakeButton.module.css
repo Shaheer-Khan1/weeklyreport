@@ -37,6 +37,11 @@
   opacity: .8;
 }
 
+@media (max-width: 480px) {
+  .btn { font-size: 11px; padding: 6px 10px; gap: 5px; }
+  .ms  { display: none; }
+}
+
 .spin {
   display: inline-block;
   animation: spin 1s linear infinite;

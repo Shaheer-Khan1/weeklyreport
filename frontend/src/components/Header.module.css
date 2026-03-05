@@ -5,6 +5,15 @@
   align-items: center;
   justify-content: space-between;
   margin-bottom: 40px;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 480px) {
+  .header { margin-bottom: 20px; }
+  .logoText { font-size: 17px; }
+  .actions { gap: 6px; }
+  .email { display: none; }
 }
 
 .logo { display: flex; align-items: center; gap: 12px; }

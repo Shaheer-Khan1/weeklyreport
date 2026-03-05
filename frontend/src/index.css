@@ -28,3 +28,7 @@ body {
   align-items: center;
   padding: 32px 16px 64px;
 }
+
+@media (max-width: 480px) {
+  #root { padding: 16px 12px 48px; }
+}

@@ -70,11 +70,12 @@ export default function App() {
     <>
       <Header auth={auth} onAuthChange={fetchAuthStatus} showToast={showToast} />
 
-      <main style={{ width: '100%', maxWidth: 720, display: 'flex', flexDirection: 'column', gap: 20 }}>
+      <main style={{ width: '100%', maxWidth: 720, display: 'flex', flexDirection: 'column', gap: 16 }}>
         {!auth.connected && <Banner onConnect={connectEmail} />}
 
         <RecordCard
           onTranscriptUpdate={handleTranscriptReady}
+          onEmailReady={handleEmailReady}
           showToast={showToast}
         />
 

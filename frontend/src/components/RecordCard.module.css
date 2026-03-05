@@ -105,3 +105,87 @@
 .context:focus { border-color: var(--accent); }
 .context::placeholder { color: var(--muted); }
 .context:disabled { opacity: .5; cursor: not-allowed; }
+
+@media (max-width: 480px) {
+  .btn { padding: 18px; }
+  .mic { font-size: 28px; }
+  .generateBtn { font-size: 14px; padding: 12px; }
+}
+
+/* ── Mode tabs ────────────────────────────────────── */
+.tabs {
+  display: flex;
+  gap: 6px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 4px;
+  margin-bottom: 16px;
+}
+.tab {
+  flex: 1;
+  padding: 8px 0;
+  border: none;
+  border-radius: 7px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .2s, color .2s;
+}
+.tab:hover:not(.tabActive) { color: var(--text); }
+.tabActive {
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: 0 1px 4px rgba(0,0,0,.25);
+}
+
+/* ── Text input mode ─────────────────────────────── */
+.textArea {
+  width: 100%;
+  min-height: 130px;
+  padding: 14px 16px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  color: var(--text);
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 1.7;
+  resize: vertical;
+  outline: none;
+  transition: border-color .2s;
+}
+.textArea:focus { border-color: var(--accent); }
+.textArea::placeholder { color: var(--muted); }
+
+.generateBtn {
+  margin-top: 14px;
+  width: 100%;
+  padding: 14px;
+  border-radius: 10px;
+  border: none;
+  background: linear-gradient(135deg, var(--accent), #7c3aed);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: filter .2s, transform .2s;
+}
+.generateBtn:hover:not(:disabled) { filter: brightness(1.1); transform: translateY(-1px); }
+.generateBtn:disabled { opacity: .5; cursor: not-allowed; transform: none; }
+
+.spinner {
+  width: 16px; height: 16px;
+  border: 2px solid rgba(255,255,255,.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin .7s linear infinite;
+  display: inline-block;
+}
+@keyframes spin { to { transform: rotate(360deg); } }

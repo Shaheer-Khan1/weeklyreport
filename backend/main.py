@@ -261,11 +261,12 @@ Rules:
 - Keep it concise and professional
 - Use plain text (no markdown formatting in body)
 - Infer missing structure from context naturally
+- Always start the email body with exactly "Hi," — never use a name or placeholder like "Hi [Name],"
 - Return ONLY valid JSON in this exact format:
 {
   "to": "",
   "subject": "Weekly Status Report – [Week/Date]",
-  "body": "Hi [Name],\n\n..."
+  "body": "Hi,\n\n..."
 }"""
 
     user_message = f"Voice note transcript:\n\n{req.transcript}"
