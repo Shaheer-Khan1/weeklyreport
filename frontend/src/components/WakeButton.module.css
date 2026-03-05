@@ -1,0 +1,44 @@
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all .2s;
+  white-space: nowrap;
+}
+.btn:hover:not(:disabled) {
+  border-color: var(--accent);
+  color: var(--text);
+}
+.btn:disabled { cursor: not-allowed; }
+
+.pinging {
+  border-color: var(--yellow);
+  color: var(--yellow);
+}
+.awake {
+  border-color: var(--green);
+  color: var(--green);
+}
+.error {
+  border-color: var(--red);
+  color: var(--red);
+}
+
+.ms {
+  font-weight: 400;
+  opacity: .8;
+}
+
+.spin {
+  display: inline-block;
+  animation: spin 1s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }

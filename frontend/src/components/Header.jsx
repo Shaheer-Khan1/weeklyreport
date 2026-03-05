@@ -1,5 +1,6 @@
 import styles from './Header.module.css'
 import { API_BASE } from '../apiBase'
+import WakeButton from './WakeButton'
 
 export default function Header({ auth, onAuthChange, showToast }) {
   async function handleClick() {
@@ -27,11 +28,14 @@ export default function Header({ auth, onAuthChange, showToast }) {
         <h1 className={styles.logoText}>Weekly<span>Report</span></h1>
       </div>
 
-      <button className={styles.pill} onClick={handleClick}>
-        <span className={`${styles.dot} ${auth.connected ? styles.connected : ''}`} />
-        <span className={styles.label}>{auth.connected ? 'Connected' : 'Connect Gmail'}</span>
-        {auth.email && <span className={styles.email}>({auth.email})</span>}
-      </button>
+      <div className={styles.actions}>
+        <WakeButton />
+        <button className={styles.pill} onClick={handleClick}>
+          <span className={`${styles.dot} ${auth.connected ? styles.connected : ''}`} />
+          <span className={styles.label}>{auth.connected ? 'Connected' : 'Connect Gmail'}</span>
+          {auth.email && <span className={styles.email}>({auth.email})</span>}
+        </button>
+      </div>
     </header>
   )
 }

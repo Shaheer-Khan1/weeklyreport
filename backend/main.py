@@ -47,6 +47,18 @@ SCOPES = ["https://www.googleapis.com/auth/gmail.send"]
 REDIRECT_URI = os.getenv("REDIRECT_URI", "http://localhost:8000/auth/callback")
 FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:5500")
 
+def _load_client_config() -> dict:
+    """Return the OAuth client config dict from env var or fallback to file."""
+    raw = os.getenv("GOOGLE_CREDENTIALS_JSON", "").strip()
+    if raw:
+        return json.loads(raw)
+    if CLIENT_SECRET_FILE.exists():
+        return json.loads(CLIENT_SECRET_FILE.read_text())
+    raise RuntimeError(
+        "No Google credentials found. Set the GOOGLE_CREDENTIALS_JSON "
+        "environment variable or add credentials.json to the backend folder."
+    )
+
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "")
 if GEMINI_API_KEY:
     genai.configure(api_key=GEMINI_API_KEY)
@@ -101,16 +113,11 @@ def get_credentials() -> Credentials | None:
 
 @app.get("/login")
 def login():
-    if not CLIENT_SECRET_FILE.exists():
-        raise HTTPException(
-            status_code=500,
-            detail="credentials.json not found. Please add your Google OAuth credentials file to the backend folder.",
-        )
-    flow = Flow.from_client_secrets_file(
-        str(CLIENT_SECRET_FILE),
-        scopes=SCOPES,
-        redirect_uri=REDIRECT_URI,
-    )
+    try:
+        client_config = _load_client_config()
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+    flow = Flow.from_client_config(client_config, scopes=SCOPES, redirect_uri=REDIRECT_URI)
     auth_url, state = flow.authorization_url(
         access_type="offline",
         prompt="consent",
@@ -121,20 +128,16 @@ def login():
 
 @app.get("/auth/callback")
 async def auth_callback(request: Request):
-    if not CLIENT_SECRET_FILE.exists():
-        raise HTTPException(status_code=500, detail="credentials.json not found.")
+    try:
+        client_config = _load_client_config()
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
-    flow = Flow.from_client_secrets_file(
-        str(CLIENT_SECRET_FILE),
-        scopes=SCOPES,
-        redirect_uri=REDIRECT_URI,
-    )
+    flow = Flow.from_client_config(client_config, scopes=SCOPES, redirect_uri=REDIRECT_URI)
     flow.fetch_token(authorization_response=str(request.url))
     creds = flow.credentials
 
-    with open(CLIENT_SECRET_FILE, "r") as f:
-        client_data = json.load(f)
-    client_info = client_data.get("web") or client_data.get("installed", {})
+    client_info = client_config.get("web") or client_config.get("installed", {})
 
     save_tokens({
         "token": creds.token,
@@ -341,6 +344,10 @@ FRONTEND_FILE = Path(__file__).parent.parent / "frontend" / "index.html"
 @app.get("/")
 def serve_frontend():
     return HTMLResponse(content=FRONTEND_FILE.read_text(encoding="utf-8"))
+
+@app.get("/health")
+def health():
+    return {"status": "ok"}
 
 
 if __name__ == "__main__":
