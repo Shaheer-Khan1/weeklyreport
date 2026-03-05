@@ -1,0 +1,19 @@
+# Secrets — never commit these
+backend/credentials.json
+backend/tokens.json
+backend/.env
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+env/
+
+# Whisper model cache
+~/.cache/whisper/
+
+# OS
+.DS_Store
+Thumbs.db

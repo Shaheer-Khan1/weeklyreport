@@ -1,0 +1,107 @@
+.btn {
+  width: 100%;
+  padding: 22px;
+  border-radius: 12px;
+  border: 2px dashed var(--border);
+  background: var(--surface2);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  color: var(--text);
+  font-size: 15px;
+  font-weight: 500;
+  transition: border-color .2s, background .2s;
+}
+.btn:hover:not(:disabled) { border-color: var(--accent); background: #1e2035; }
+
+.btn.recording {
+  border-color: var(--red);
+  background: rgba(239,68,68,.08);
+  animation: pulseBorder 1.5s infinite;
+}
+@keyframes pulseBorder {
+  0%,100% { box-shadow: 0 0 0 0 rgba(239,68,68,.3); }
+  50%      { box-shadow: 0 0 0 8px rgba(239,68,68,0); }
+}
+
+.btn.transcribing {
+  border-color: var(--accent);
+  background: rgba(108,99,255,.08);
+  cursor: not-allowed;
+}
+.btn.transcribing .mic { opacity: .4; filter: grayscale(1); }
+
+.mic { font-size: 36px; }
+.btn.recording .mic { animation: micPulse 1s infinite; }
+@keyframes micPulse {
+  0%,100% { transform: scale(1); }
+  50%      { transform: scale(1.15); }
+}
+
+.status { font-size: 13px; color: var(--muted); }
+.btn.recording .status { color: var(--red); }
+.btn.transcribing .status { color: var(--accent); }
+
+.timer { font-size: 13px; font-weight: 700; color: var(--red); }
+
+.waveform {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  height: 24px;
+}
+.waveform span {
+  display: block;
+  width: 3px;
+  border-radius: 99px;
+  background: var(--red);
+  animation: wave 1s infinite ease-in-out;
+}
+.waveform span:nth-child(1) { height: 8px; }
+.waveform span:nth-child(2) { height: 16px; }
+.waveform span:nth-child(3) { height: 24px; }
+.waveform span:nth-child(4) { height: 16px; }
+.waveform span:nth-child(5) { height: 8px; }
+@keyframes wave {
+  0%,100% { transform: scaleY(.5); }
+  50%     { transform: scaleY(1); }
+}
+
+.progressBar {
+  width: 100%;
+  height: 3px;
+  background: var(--surface2);
+  border-radius: 99px;
+  overflow: hidden;
+  margin-top: 4px;
+}
+.progressFill {
+  height: 100%;
+  width: 40%;
+  background: linear-gradient(90deg, var(--accent), #a78bfa);
+  border-radius: 99px;
+  animation: slide 1.4s ease-in-out infinite;
+}
+@keyframes slide {
+  0%   { transform: translateX(-150%); }
+  100% { transform: translateX(400%); }
+}
+
+.context {
+  width: 100%;
+  margin-top: 14px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  font-family: inherit;
+  font-size: 13px;
+  padding: 10px 14px;
+  outline: none;
+  transition: border-color .2s;
+}
+.context:focus { border-color: var(--accent); }
+.context::placeholder { color: var(--muted); }
+.context:disabled { opacity: .5; cursor: not-allowed; }

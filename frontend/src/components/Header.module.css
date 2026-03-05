@@ -1,0 +1,48 @@
+.header {
+  width: 100%;
+  max-width: 720px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 40px;
+}
+
+.logo { display: flex; align-items: center; gap: 12px; }
+
+.logoIcon {
+  width: 40px; height: 40px;
+  background: linear-gradient(135deg, var(--accent), #a78bfa);
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  font-size: 20px;
+}
+
+.logoText { font-size: 20px; font-weight: 700; letter-spacing: -.3px; }
+.logoText span { color: var(--accent); }
+
+.pill {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  font-size: 13px;
+  cursor: pointer;
+  color: var(--text);
+  transition: border-color .2s;
+}
+.pill:hover { border-color: var(--accent); }
+
+.dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--red);
+  transition: background .3s;
+}
+.dot.connected { background: var(--green); }
+
+.label { font-weight: 500; }
+.email { color: var(--muted); font-size: 12px; }
